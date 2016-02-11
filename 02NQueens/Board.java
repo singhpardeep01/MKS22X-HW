@@ -60,7 +60,8 @@ public class Board{
 	return false;
     }
     
-    public int removeQueen( int column ) {
+    public boolean removeQueen( int column ) {
+	if ( in
 	int row = 0;
 	for ( int x = 0; x < size; x++) {
 	    if ( board[x][column] == 1 ) {
@@ -72,15 +73,15 @@ public class Board{
 	horizontal( row, column, false );
 	diagonal( row, column, false );
 	queens--;
-	return row;
+	return true;
     }
 	
     public boolean solve() {
-	return helpSolve( 0, 0 );
+	return helpSolve(0);
     }
 
-    public boolean helpSolve( int row, int column ) {
-	while ( queens < size ) {
+    public boolean helpSolve( int column ) {
+	while ( queens != size ) {
 	    if ( row >= size ) {
 		helpSolve( removeQueen(column - 1) + 1, column - 1 );
 	    }
