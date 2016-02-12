@@ -1,10 +1,10 @@
-public class Board{
+public class QueenBoard{
 
     private int[][] board;
     private int size;
     private int queens;
 
-    public Board( int n ) {
+    public QueenBoard( int n ) {
 	board = new int[n][n];
 	size = n;
 	queens = 0;
@@ -60,8 +60,7 @@ public class Board{
 	return false;
     }
     
-    public boolean removeQueen( int column ) {
-	if ( in
+    public int removeQueen( int column ) { 
 	int row = 0;
 	for ( int x = 0; x < size; x++) {
 	    if ( board[x][column] == 1 ) {
@@ -73,32 +72,55 @@ public class Board{
 	horizontal( row, column, false );
 	diagonal( row, column, false );
 	queens--;
-	return true;
+	return row;
     }
 	
     public boolean solve() {
-	return helpSolve(0);
+	return helpSolve(0,0);
     }
 
-    public boolean helpSolve( int column ) {
-	while ( queens != size ) {
-	    if ( row >= size ) {
-		helpSolve( removeQueen(column - 1) + 1, column - 1 );
-	    }
-	    if ( ! addQueen( row, column ) ) {
-		helpSolve( removeQueen(column - 1) + 1 , column - 1 );
-	    }
-	    System.out.println(toString());
-	    column++;
-	    row = 0;
+    public boolean helpSolve( int row, int column ) {
+	if ( column >= size ) {
+	    return true;
 	}
-	return true;
+	if ( column == 0 && row >= size ) {
+	    return false;
+	}
+	if ( row >= size ) {
+	    return helpSolve( removeQueen(column - 1) + 1, column - 1 );
+	}
+	else if ( ! addQueen( row, column ) ) {
+	    return helpSolve( removeQueen(column - 1) + 1 , column - 1 );
+	}
+	else {
+	    return helpSolve( 0, ++column );
+	}
     }
-	
+
+    public void printSolution() {
+	for ( int x = 0; x < size; x++ ) {
+	    for ( int y = 0; y < size; y++ ) {
+		if ( board[x][y] == 1 ) {
+		    System.out.print( "Q " );
+		}
+		else {
+		    System.out.print( "_ " );
+		}
+	    }
+	    System.out.println( "\n" );
+	}
+    }
+
     public static void main( String[] args ) {
-	Board pardeep = new Board(4);
+	QueenBoard pardeep;
+	if ( args.length > 0 ) {
+	    pardeep = new QueenBoard( Integer.parseInt( args[0] ) );
+	}
+	else {
+	    pardeep = new QueenBoard( 4 );
+	}
 	pardeep.solve();
-     	System.out.println(pardeep);
+     	pardeep.printSolution();
     }
 
 }
