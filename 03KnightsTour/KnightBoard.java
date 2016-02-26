@@ -1,11 +1,9 @@
 public class KnightBoard{
 
     private int[][] board;
-    private int length, width, step = 1;
+    private int step = 1;
 
-    public KnightBoard ( int cols, int rows ) {
-	length = rows;
-	width = cols;
+    public KnightBoard ( int rows, int cols ) {
 	board = new int[rows+4][cols+4];
 	for ( int x = 0; x < rows+4; x++ ) {
 	    for ( int y = 0; y < cols+4; y++ ) {
@@ -17,208 +15,53 @@ public class KnightBoard{
 	}
     }
 
-    private boolean moveKnight( int row, int column ) {
-	printSolution();
-	System.out.println("");
-	if ( row == 2 && column == 2 ) {
-	    board[2][2] = 1;
+    private boolean move( int row, int column ) {
+	if ( board[row][column] != 0 ) {
+	    return false;
 	}
-	if ( width * length > step ) {
-	    if ( board[row-2][column+1] == 0 ) {
-		board[row-2][column+1] = ++step;
-		if ( ! moveKnight( row-2, column+1 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row-2][column-1] == 0 ) {
-		board[row-2][column-1] = ++step;
-		if ( ! moveKnight( row-2, column-1 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row+2][column+1] == 0 ) {
-		board[row+2][column+1] = ++step;
-		if ( ! moveKnight( row+2, column+1 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row+2][column-1] == 0 ) {
-		board[row+2][column-1] = ++step;
-		if ( ! moveKnight( row+2, column-1 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row+1][column+2] == 0 ) {
-		board[row+1][column+2] = ++step;
-		if ( ! moveKnight( row+1, column+2 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row+1][column-2] == 0 ) {
-		board[row+1][column-2] = ++step;
-		if ( ! moveKnight( row+1, column-2 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row-1][column+2] == 0 ) {
-		board[row-1][column+2] = ++step;
-		if ( ! moveKnight( row-1, column+2 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    if ( board[row-1][column-2] == 0 ) {
-		board[row-1][column-2] = ++step;
-		if ( ! moveKnight( row-1, column-2 ) ) {
-		    board[row][column] = 0;
-		}
-		else {
-		    return true;
-		}
-	    }
-	    else {
-		return false;		
-	    }
+	else{
+	    board[row][column] = step;
+	    step++;
 	}
-
-	return true;
-       
-    }
-    
-    public boolean solve() {
-	return moveKnight(2,2);
-    }
-    /*
-    public boolean solveH( int row, int column, int lastMove ) {
-	boolean ret = false;
-	if ( row == 2 && column == 2 ) {
-	    board[2][2] = 1;
-	}
-	if ( board[row][column] == ( board.length - 4 ) * ( board[0].length - 4 ) ) {
+	if ( board[row][column] == ( board.length - 4 ) * ( board[0].length - 4) ) {
 	    return true;
 	}
-	else if ( 1 > lastMove && moveKnight( row, column, 1 ) ) {
-	    ret = solveH( row-2, column+1, 0 );
-	    if ( ret == false ) {
-		board[row-2][column+1] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 1 );
-	    }
-	    else {
-		return true;
-	    }
+	if ( move( row+2, column+1 ) ||
+	     move( row+2, column-1 ) ||
+	     move( row-2, column+1 ) ||
+	     move( row-2, column-1 ) ||
+	     move( row+1, column+2 ) ||
+	     move( row+1, column-2 ) ||
+	     move( row-1, column+2 ) ||
+	     move( row-1, column-2 ) ) {
+	    return true;
 	}
-	else if ( 2 > lastMove && moveKnight( row, column, 2 ) ) {
-	    ret = solveH( row-2, column-1, 0 );
-	    if ( ret == false ) {
-		board[row-2][column-1] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 2 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 3 > lastMove && moveKnight( row, column, 3 ) ) {
-	    ret = solveH( row+2, column+1, 0 );
-	    if ( ret == false ) {
-		board[row+2][column+1] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 3 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 4 > lastMove && moveKnight( row, column, 4 ) ) {
-	    ret = solveH( row+2, column-1, 0 );
-	    if ( ret == false ) {
-		board[row+2][column-1] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 4 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 5 > lastMove && moveKnight( row, column, 5 ) ) {
-	    ret = solveH( row+1, column+2, 0 );
-	    if ( ret == false ) {
-		board[row+1][column+2] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 5 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 6 > lastMove && moveKnight( row, column, 6 ) ) {
-	    ret = solveH( row+1, column-2, 0 );
-	    if ( ret == false ) {
-		board[row+1][column-2] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 6 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 7 > lastMove && moveKnight( row, column, 7 ) ) {
-	    ret = solveH( row-1, column+2, 0 );
-	    if ( ret == false ) {
-		board[row-1][column+2] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 7 );
-	    }
-	    else {
-		return true;
-	    }
-	}
-	else if ( 8 > lastMove && moveKnight( row, column, 8 ) ) {
-	    ret = solveH( row-1, column-2, 0 );
-	    if ( ret == false ) {
-		board[row-1][column-2] = 0;
-		//board[row][column] = 0;
-		solveH( row, column, 8 );
-	    }
-	    else {
-		return true;
-	    }
-	}
+	step--;
+	board[row][column] = 0;
 	return false;
     }
-    */
+
+    public boolean solve() {
+	return move(2,2);
+    }
+
+
     public void printSolution(){   
 	for ( int x = 2; x < board.length-2; x++ ) {
 	    for ( int y = 2; y < board[0].length-2; y++ ) {
-		    System.out.print( board[x][y] + " " );
+		if ( board[x][y] < 10 ) {
+		    System.out.print( " " + board[x][y] + " " );
+		}
+		else {
+		    System.out.print(board[x][y] + " " );
+		}
 	    }
 	    System.out.println( "" );
 	}
     }
 
     public static void main( String[] args ) {
-	KnightBoard pardeep = new KnightBoard(5,5);
+	KnightBoard pardeep = new KnightBoard(3,7);
 	pardeep.solve();
 	pardeep.printSolution();
     }
