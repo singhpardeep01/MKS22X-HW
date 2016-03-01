@@ -85,24 +85,25 @@ public class Maze{
         All visited spots that are part of the solution are changed to '@'
 
     */
-    private boolean solve(int x, int y){
-        if(animate){
-            System.out.println(this);
+    private boolean solve(int x, int y) {
+    	if(animate){
+	    System.out.println(this);
             wait(20);
         }
-	if ( maze[x][y] == ' ' ) {
-	    maze[x][y] = '@';
-	}
 	if ( maze[x][y] == 'E' ) {
 	    return true;
 	}
-	if ( solve(x+1,y) || solve(x-1,y) || solve(x,y+1) || solve(x,y-1) ) {
+	if ( maze[x][y] == ' ' ) {
+	    maze[x][y] = '@';
+	}
+	else {
+	    return false;
+	}
+	if ( solve(x,y-1) || solve(x-1,y) || solve(x,y+1) || solve(x+1,y) ) {
 	    return true;
 	}
 	maze[x][y] = '.';
-	     
-        //COMPLETE SOLVE
-        return false; //so it compiles
+        return false;
     }
 
 
@@ -112,6 +113,16 @@ public class Maze{
         System.out.println(CLEAR_SCREEN);
     }
 
+    public void printSolution() {
+	for ( int x = 0; x < maze.length; x++ ) {
+	    for ( int y = 0; y < maze[0].length; y++ ) {
+		System.out.print( maze[x][y] );
+	    }
+	    System.out.println("");
+	}
+    }
+    
+		  
     public String toString(){
         int maxx = maze.length;
         int maxy = maze[0].length;
