@@ -21,7 +21,7 @@ public class Maze{
     public Maze(String filename, boolean ani) {
 	try {
 	    File file = new File(filename);
-	    animate = ani;
+	    animate = true;
 	    Scanner info = new Scanner(file);
 	    int rows = 0;
 	    int columns=0;
@@ -33,6 +33,7 @@ public class Maze{
 		    columns = data.length();
 		}
 	    } 
+	    //System.out.println(data);
 	    maze = new char[rows][columns];
 	    for ( int x = 0; x < rows; x++ ) {
 		for ( int y = 0; y < columns; y++ ) {
@@ -87,6 +88,7 @@ public class Maze{
     */
     private boolean solve(int x, int y) {
     	if(animate){
+	    //printSolution();
 	    System.out.println(this);
             wait(20);
         }
@@ -113,19 +115,32 @@ public class Maze{
         System.out.println(CLEAR_SCREEN);
     }
 
-    public void printSolution() {
+    public String toString() {
+	String ans = "";
+	if ( animate ) {
+            ans = "Solving a maze that is " + maze.length + " by " + maze[0].length + "\n";
+	}
 	for ( int x = 0; x < maze.length; x++ ) {
 	    for ( int y = 0; y < maze[0].length; y++ ) {
-		System.out.print( maze[x][y] );
+		char c = maze[x][y];
+		if ( c == '#' ) {
+		    ans += color(38,47)+c;
+		}
+		else{
+		    ans += color(33,40)+c;
+		}
 	    }
-	    System.out.println("");
+	    ans+=("\n");
 	}
+	return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
     }
     
-		  
+    /*		  
     public String toString(){
         int maxx = maze.length;
         int maxy = maze[0].length;
+	System.out.println(maxx);
+	System.out.println(maxy);
         String ans = "";
         if(animate){
             ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
@@ -142,7 +157,7 @@ public class Maze{
             }
         }
         return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
-    }
+	}*/
 
     //MORE FREE STUFF!!! *you can ignore all of this*
     //Terminal keycodes to clear the terminal, or hide/show the cursor
