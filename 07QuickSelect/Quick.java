@@ -38,7 +38,7 @@ public class Quick{
     }
     private static int quickselect(int[]data, int k, int left, int right) {
 	if ( left == right ) {
-	return data[right];
+	    return data[right];
 	}
 	int x = partition(data,left,right);
 	if ( k > x ) {
@@ -51,9 +51,19 @@ public class Quick{
 	    return data[k];
 	}
     }
+    public static void quickSort(int[] data) {
+	quickSort(data,0,data.length-1);
+    }
+    private static void quickSort(int[]data, int left, int right) {
+	if ( right - left >= 1) {
+	int x = partition(data,left,right);
+	quickSort( data,x+1,right );
+	quickSort( data,left,x-1);
+	}
+    }
     public static String name(){
 	return "7,Singh,Pardeep";
     }
-    public static void main( String[] args ) {			   
+    public static void main( String[] args ) {	
     }
 }
