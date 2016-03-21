@@ -24,35 +24,54 @@ public class MyLinkedList {
     private int size;
     private LNode used;
 
-    public MyLinkedList( int length ) {
-	start = new LNode(0);
-	size = length;
-	used = start;
-	LNode current = start;
-	while ( length > 0 ) {
-	    current.setNext(new LNode(0));
-	    current = current.getNext();
-	    length--;
-	}
-    }
     public boolean add( int value ) {
-	used.setValue(value);
-	used = used.getNext();
+	if ( start == null ) {
+	    start = new LNode(value);
+	    used = start;
+	}
+	else {
+	    used.setNext( new LNode(value) ); 
+	    used = used.getNext();
+	}
+	size++;
+	return true;
+    }
+    public boolean add ( int index, int value ) {
+	if ( index == 0 ) {
+	    LNode p = new LNode(value);
+	    p.setNext(start);
+	    start = p;
+	    size++;
+	    return true;
+	}
+	LNode current = start;
+	int c = 0;   
+	while ( index-1 > c ) {
+	    current = current.getNext();
+	    c++;
+	}
+	LNode p = new LNode(value);
+	p.setNext(current.getNext());
+	current.setNext(p);
+	size++;
 	return true;
     }
     public String toString() {
-	String retStr = "[";
-	LNode current = start;
-	retStr += current.getValue();
-	int c = 1;   
-	while ( size > c ) {
-	    current = current.getNext();
-	    retStr += ", " + current.getValue();
-	    c++;
+	String ans = "[";
+	LNode p = start;
+	while(p != null){
+	    ans += p.getValue();
+	    if(p.getNext()!= null){
+		ans+=", ";
+	    }
+	    p = p.getNext();
 	}
-	retStr += "]";
-	return retStr;
+	return ans+"]";
     }
+    public int size() {
+	return size;
+    }
+    
     public int get( int index ) {
 	LNode current = start;
 	int c = 0;   
@@ -62,6 +81,20 @@ public class MyLinkedList {
 	}
 	return current.getValue();
     }
+    
+    public int indexOf( int value ) {
+	LNode current = start;
+	int c = 0;   
+	while ( size > c ) {
+	    if ( current.getValue() == value ) {
+		return c;
+	    }
+	    current = current.getNext();
+	    c++;
+	}
+	return -1;
+    }
+    
     public int set( int index, int NewValue ) {
 	LNode current = start;
 	int c = 0;   
@@ -75,22 +108,30 @@ public class MyLinkedList {
     }
 	
     public static void main( String[] args ) {
-	MyLinkedList x = new MyLinkedList(5);
-	x.add(1);
-	x.add(2);
-	x.add(3);
-	x.add(4);
-	x.add(5);
-	System.out.println(x);
-	System.out.println( x.get(0) );
-	System.out.println( x.get(1) );
-	System.out.println( x.get(2) );
-	System.out.println( x.get(3) );
-	System.out.println( x.get(4) );
-	System.out.println( x.set(0,0) );
-	System.out.println( x.set(1,1) );
-	System.out.println( x.set(2,2) );
-	System.out.println( x.set(3,3) );
-	System.out.println( x.set(4,4) );
+	MyLinkedList pardeep = new MyLinkedList();
+	pardeep.add(0);
+	pardeep.add(1);
+	pardeep.add(2);
+	pardeep.add(3);
+	pardeep.add(5);
+	System.out.println(pardeep);
+	pardeep.add(4,4);
+	pardeep.add(0,-1);
+	System.out.println(pardeep);
+	pardeep.set(0,1);
+	pardeep.set(1,2);
+	pardeep.set(2,3);
+	pardeep.set(3,4);
+	pardeep.set(4,5);
+	pardeep.set(5,6);
+	pardeep.set(6,7);
+	System.out.println(pardeep);
+	System.out.println( pardeep.indexOf(6) );
+	System.out.println( pardeep.get(0) );
+	System.out.println( pardeep.get(1) );
+	System.out.println( pardeep.get(2) );
+	System.out.println( pardeep.get(3) );
+	System.out.println( pardeep.get(4) );
+	System.out.println( pardeep.get(5) );
     }    
 }
