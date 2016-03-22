@@ -1,15 +1,15 @@
-public class MyLinkedList {
+public class MyLinkedList<T> {
     private class LNode {
-	private int value;
+	private T value;
 	private LNode next;
-	public LNode( int val ) {
+	public LNode( T val ) {
 	    value = val;
 	    next = null;
 	}
-	public int getValue() {
+	public T getValue() {
 	    return value;
 	}
-	public void setValue( int val ) {
+	public void setValue( T val ) {
 	    value = val;
 	}
 	public LNode getNext() {
@@ -24,7 +24,7 @@ public class MyLinkedList {
     private int size;
     private LNode used;
 
-    public boolean add( int value ) {
+    public boolean add( T value ) {
 	if ( start == null ) {
 	    start = new LNode(value);
 	    used = start;
@@ -36,7 +36,7 @@ public class MyLinkedList {
 	size++;
 	return true;
     }
-    public boolean add ( int index, int value ) {
+    public boolean add ( int index, T value ) {
 	if ( index == 0 ) {
 	    LNode p = new LNode(value);
 	    p.setNext(start);
@@ -72,7 +72,7 @@ public class MyLinkedList {
 	return size;
     }
     
-    public int get( int index ) {
+    public T get( int index ) {
 	LNode current = start;
 	int c = 0;   
 	while ( index > c ) {
@@ -82,11 +82,11 @@ public class MyLinkedList {
 	return current.getValue();
     }
     
-    public int indexOf( int value ) {
+    public int indexOf( T value ) {
 	LNode current = start;
 	int c = 0;   
 	while ( size > c ) {
-	    if ( current.getValue() == value ) {
+	    if ( current.getValue().equals(value) ) {
 		return c;
 	    }
 	    current = current.getNext();
@@ -95,38 +95,38 @@ public class MyLinkedList {
 	return -1;
     }
     
-    public int set( int index, int NewValue ) {
+    public T set( int index, T NewValue ) {
 	LNode current = start;
 	int c = 0;   
 	while ( index > c ) {
 	    current = current.getNext();
 	    c++;
 	}
-	int retInt = current.getValue();
+	T ret = current.getValue();
 	current.setValue(NewValue);
-	return retInt;
+	return ret;
     }
 	
     public static void main( String[] args ) {
-	MyLinkedList pardeep = new MyLinkedList();
-	pardeep.add(0);
-	pardeep.add(1);
-	pardeep.add(2);
-	pardeep.add(3);
-	pardeep.add(5);
+	MyLinkedList pardeep = new MyLinkedList<String>();
+	pardeep.add("q");
+	pardeep.add("w");
+	pardeep.add("e");
+	pardeep.add("r");
+	pardeep.add("t");
 	System.out.println(pardeep);
-	pardeep.add(4,4);
-	pardeep.add(0,-1);
+	pardeep.add(4,"y");
+	pardeep.add(0,"u");
 	System.out.println(pardeep);
-	pardeep.set(0,1);
-	pardeep.set(1,2);
-	pardeep.set(2,3);
-	pardeep.set(3,4);
-	pardeep.set(4,5);
-	pardeep.set(5,6);
-	pardeep.set(6,7);
+	pardeep.set(0,"i");
+	pardeep.set(1,"o");
+	pardeep.set(2,"p");
+	pardeep.set(3,"a");
+	pardeep.set(4,"s");
+	pardeep.set(5,"d");
+	pardeep.set(6,"f");
 	System.out.println(pardeep);
-	System.out.println( pardeep.indexOf(6) );
+	System.out.println( pardeep.indexOf("i") );
 	System.out.println( pardeep.get(0) );
 	System.out.println( pardeep.get(1) );
 	System.out.println( pardeep.get(2) );
