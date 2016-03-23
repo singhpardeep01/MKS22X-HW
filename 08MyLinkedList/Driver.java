@@ -1,68 +1,142 @@
 import java.util.*;
 public class Driver{
     public static void main(String[]args){
- MyLinkedList m = new MyLinkedList();
- ArrayList<Integer> n = new ArrayList<Integer>();
+        MyLinkedList<String> m = new MyLinkedList<String>();
+        ArrayList<String>    n = new ArrayList<String>();
 
- long start,end;
+        for(int i = 0; i < 10; i++){
+            n.add(""+i);
+            m.add(""+i);
+        }
 
- start = System.currentTimeMillis();
-	n.add(0);
-	n.add(1);
-	n.add(2);
-	n.add(3);
-	n.add(5);
-	System.out.println(n);
-	n.add(4,4);
-	n.add(0,-1);
-	System.out.println(n);
-	n.set(0,1);
-	n.set(1,2);
-	n.set(2,3);
-	n.set(3,4);
-	n.set(4,5);
-	n.set(5,6);
-	n.set(6,7);
-	System.out.println(n);
-	System.out.println( n.indexOf(6) );
-	System.out.println( n.get(0) );
-	System.out.println( n.get(1) );
-	System.out.println( n.get(2) );
-	System.out.println( n.get(3) );
-	System.out.println( n.get(4) );
-	System.out.println( n.get(5) );
-        //code to test here on ArrayList n
- end = System.currentTimeMillis();
- System.out.println("Time: " + (end-start)/1000.0 + " seconds for ArrayList");
+        try{
+            m.add(-1,"oops");
+            System.out.println("\n\nAdd -1 #####################################");
+        }catch(IndexOutOfBoundsException e){
 
- start = System.currentTimeMillis();
- 	m.add(0);
-	m.add(1);
-	m.add(2);
-	m.add(3);
-	m.add(5);
-	System.out.println(m);
-	m.add(4,4);
-	m.add(0,-1);
-	System.out.println(m);
-	m.set(0,1);
-	m.set(1,2);
-	m.set(2,3);
-	m.set(3,4);
-	m.set(4,5);
-	m.set(5,6);
-	m.set(6,7);
-	System.out.println(m);
-	System.out.println( m.indexOf(6) );
-	System.out.println( m.get(0) );
-	System.out.println( m.get(1) );
-	System.out.println( m.get(2) );
-	System.out.println( m.get(3) );
-	System.out.println( m.get(4) );
-	System.out.println( m.get(5) );
-       //same code to test here on linked list m
- end = System.currentTimeMillis();
- System.out.println("Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+        }
+        try{
+            m.add(12,"oops");
+            System.out.println("\n\n add 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
 
+        }
+        try{
+            m.remove(12);
+            System.out.println("\n\n remove 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
+
+        }
+
+        try{
+            m.set(12,"Fwazzat?!?");
+            System.out.println("\n\n set 12 #####################################");
+        }catch(IndexOutOfBoundsException e){
+
+        }
+
+
+
+
+
+        //replace toString(true) with a debug to string that shows the head/tail
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        //test removing from head/tail/middle
+        m.remove(0);
+        n.remove(0);
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        m.remove(2);
+        n.remove(2);
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        m.remove(m.size()-1);
+        n.remove(n.size()-1);
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        //test adding to end/start
+        m.add(0,"START");
+        n.add(0,"START");
+        m.add(m.size(),"PENULTIMATE");
+        n.add(n.size(),"PENULTIMATE");
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        //test add
+        m.add("Z-END!");
+        n.add("Z-END!");
+        System.out.println(m.toString());
+        System.out.println(n);
+
+	//indexOf
+	System.out.println(m.indexOf("0"));
+	System.out.println(n.indexOf("0"));
+	System.out.println(m.indexOf("START"));
+	System.out.println(n.indexOf("START"));
+	System.out.println(m.indexOf("Z-END!"));
+	System.out.println(n.indexOf("Z-END!"));
+	System.out.println(m.indexOf("5"));
+	System.out.println(m.indexOf("5"));
+
+        //test remove random items:
+        Random rand = new Random(0);
+        for(int i = 0; i < 6000; i++){
+            int op = rand.nextInt(4);
+
+            if(op == 0 || n.size()==0){//ensure never empty
+                n.add(""+i);
+                m.add(""+i);
+            }else if(op == 1 ){
+                int x = rand.nextInt(m.size());
+                n.add(x,""+i);
+                m.add(x,""+i);
+            }else{
+                int x = rand.nextInt(n.size());
+                if(!n.remove(x).equals(m.remove(x))){
+                    System.out.println("Non matching elements removed\n");
+                    System.exit(1);
+                }
+            }
+        }
+        System.out.println(m.toString());
+        System.out.println(n);
+
+        /*test speed of add in front and at end.
+        long start,end;
+        System.out.println("Add 100k to front");
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i < 100000; i++)
+            n.add(0,""+i);
+        end = System.currentTimeMillis();
+        System.out.println( "ArrayList "+(end-start)/1000.0 );
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i < 100000; i++)
+            m.add(0,""+i);
+        end = System.currentTimeMillis();
+        System.out.println( "LinkedList "+(end-start)/1000.0 );
+
+
+        System.out.println("Add 1m to end");
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i < 1000000; i++)
+            n.add(""+i);
+        end = System.currentTimeMillis();
+        System.out.println( "ArrayList "+(end-start)/1000.0 );
+
+        start = System.currentTimeMillis();
+        for(int i = 0; i < 1000000; i++)
+            m.add(""+i);
+        end = System.currentTimeMillis();
+        System.out.println( "LinkedList "+(end-start)/1000.0 );
+
+        */
     }
 }
