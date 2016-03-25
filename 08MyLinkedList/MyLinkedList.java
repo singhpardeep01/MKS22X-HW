@@ -1,6 +1,28 @@
 import java.util.*;
-import java.lang.IndexOutOfBoundsException;
-public class MyLinkedList<T> {
+public class MyLinkedList<T> implements Iterable<T> {
+    public Iterator<T> iterator() {
+	return new MyIteratorThingyThatMakesLifeAlotEasier();
+    }
+    private class MyIteratorThingyThatMakesLifeAlotEasier implements Iterator<T> {
+	private LNode next;
+	public MyIteratorThingyThatMakesLifeAlotEasier() {
+	    next = head;
+	}
+	public boolean hasNext() {
+	    return next != null;
+	}
+	public T next() {
+	    if ( hasNext() ) {
+		T val = next.getValue();
+		next = next.getNext();
+		return val;
+	    }
+	    throw new NoSuchElementException();
+	}
+	public void remove() {
+	    throw new UnsupportedOperationException();
+	}
+    }	
     private class LNode {
 	private T value;
 	private LNode next;
@@ -30,11 +52,11 @@ public class MyLinkedList<T> {
 	if ( head == null ) {
 	    head = new LNode(value);
 	    tail = head;
+	    size++;
+	    return true;
 	}
-	else {
-	    tail.setNext( new LNode(value) ); 
-	    tail = tail.getNext();
-	}
+	tail.setNext( new LNode(value) ); 
+	tail = tail.getNext();
 	size++;
 	return true;
     }
@@ -166,7 +188,16 @@ public class MyLinkedList<T> {
     }
 	
     public static void main( String[] args ) {
-	MyLinkedList pardeep = new MyLinkedList<String>();
+	MyLinkedList<Integer> pardeep = new MyLinkedList<>();
+	for ( int i = 0; i < 10; i++ ) {
+	    pardeep.add(i);
+	}
+	System.out.println(pardeep);
+	for ( Integer x : pardeep ) {
+	    System.out.print( x + " ");
+	}
+	System.out.println();
+	/*
 	pardeep.add("q");
 	pardeep.add("w");
 	pardeep.add("e");
@@ -193,5 +224,6 @@ public class MyLinkedList<T> {
 	System.out.println( pardeep.get(3) );
 	System.out.println( pardeep.get(4) );
 	System.out.println( pardeep.get(5) );
+	*/    
     }    
 }
