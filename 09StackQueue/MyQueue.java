@@ -1,6 +1,10 @@
+
 import java.util.NoSuchElementException;
 public class MyQueue<T> {
-    private MyLinkedList queue = new MyLinkedList();
+    private MyLinkedList<T> queue;
+    public MyQueue() {
+	queue = new MyLinkedList<>();
+    }
     public void enqueue(T item) {
 	queue.add(item);
     }
@@ -8,20 +12,18 @@ public class MyQueue<T> {
 	if ( isEmpty() ) {
 	    throw new NoSuchElementException();
 	}
-	T item = (T) queue.get(0);
-	queue.remove(0);
-	return item;
+	return queue.remove(0);
     }
     public T peek() {
 	if ( isEmpty() ) {
 	    throw new NoSuchElementException();
 	}
-	return (T) queue.get(0);
+	return queue.get(0);
     }
     public int size() {
 	return queue.size();
     }
     public boolean isEmpty() {
-	return size() > 0;
+	return size() == 0;
     }
 }

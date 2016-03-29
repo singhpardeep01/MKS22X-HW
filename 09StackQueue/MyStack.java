@@ -1,6 +1,9 @@
 import java.util.NoSuchElementException;
 public class MyStack<T> {
-    private MyLinkedList stack = new MyLinkedList();
+    private MyLinkedList<T> stack;
+    public MyStack() {
+	stack = new MyLinkedList<>();
+    }
     public void push(T item) {
 	stack.add(0,item);
     }
@@ -8,20 +11,18 @@ public class MyStack<T> {
 	if ( isEmpty() ) {
 	    throw new NoSuchElementException();
 	}
-	T item = (T) stack.get(0);
-	stack.remove(0);
-	return item;
+	return stack.remove(0);
     }
     public T peek() {
 	if ( isEmpty() ) {
 	    throw new NoSuchElementException();
 	}
-	return (T) stack.get(0);
+	return stack.get(0);
     }
     public int size() {
 	return stack.size();
     }
     public boolean isEmpty() {
-	return size() > 0;
+	return size() == 0;
     }
 }
