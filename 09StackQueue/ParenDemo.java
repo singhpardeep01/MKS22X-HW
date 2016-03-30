@@ -1,11 +1,7 @@
 public class ParenDemo {
-    private static MyStack<String> stack;
-    public ParenDemo() {
-	stack = new MyStack<>();
-    }
+    private static MyStack<String> stack = new MyStack<String>();
     public static boolean isMatching(String input) {
 	for (int x = 0; x < input.length(); x++) {
-	    System.out.println(  input.substring(x,x+1) );
 	    if ( input.substring(x,x+1).equals("(") ||
 		 input.substring(x,x+1).equals("[") ||
 		 input.substring(x,x+1).equals("{") ||
@@ -24,7 +20,10 @@ public class ParenDemo {
 		    }
 	    }
 	}
-	return true;
+	if (stack.isEmpty()) {
+	    return true;
+	}
+	return false;
     }
     public static boolean isClose(String x, String y) {
 	if ( ( x.equals("(") && y.equals(")") ) ||
