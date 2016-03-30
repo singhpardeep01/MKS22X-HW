@@ -25,4 +25,20 @@ public class MyStack<T> {
     public boolean isEmpty() {
 	return size() == 0;
     }
+    public static void main(String[]) {
+	MyStack<Integers> stack = new MyStack<>();
+	try{
+	    stack.pop();
+	}catch(NoSuchElementException e) {
+	    System.out.println("pop is good.");
+	}
+	try{
+	    stack.peak();
+	}catch(NoSuchElementException e) {
+	    System.out.println("peak is good.");
+	}
+	for(int x = 0; x < 10; x++) {
+	    stack.push(x);
+	}
+
 }

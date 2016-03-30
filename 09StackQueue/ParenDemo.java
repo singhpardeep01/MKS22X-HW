@@ -1,6 +1,7 @@
 public class ParenDemo {
-    private static MyStack<String> stack = new MyStack<String>();
+
     public static boolean isMatching(String input) {
+	MyStack<String> stack = new MyStack<String>();
 	for (int x = 0; x < input.length(); x++) {
 	    if ( input.substring(x,x+1).equals("(") ||
 		 input.substring(x,x+1).equals("[") ||
