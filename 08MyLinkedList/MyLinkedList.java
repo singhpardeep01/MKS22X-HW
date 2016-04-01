@@ -52,11 +52,10 @@ public class MyLinkedList<T> implements Iterable<T> {
 	if ( head == null ) {
 	    head = new LNode(value);
 	    tail = head;
-	    size++;
-	    return true;
+	}else{
+	    tail.setNext( new LNode(value) ); 
+	    tail = tail.getNext();
 	}
-	tail.setNext( new LNode(value) ); 
-	tail = tail.getNext();
 	size++;
 	return true;
     }
