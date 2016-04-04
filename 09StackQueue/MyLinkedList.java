@@ -142,19 +142,28 @@ public class MyLinkedList<T> implements Iterable<T> {
     public T remove ( int index ) {
 	if ( index >= size || index < 0 ) {
 	    throw new IndexOutOfBoundsException();
-	}
+	}/*
+	if (size == 1) {
+	    T ret = head.getValue();
+	    head = null;
+	    tail = null;
+	    return ret;
+	}*/
 	if ( index == 0 ) {
 	    T ret = head.getValue();
 	    head = head.getNext();
-	    head.setPrev(null);
+	    if (head != null ) {
+		head.setPrev(null);
+	    }
 	    size--;
 	    return ret;
 	}
 	if ( index == size -1 ) {
 	    T ret = tail.getValue();
-	    tail = head;
 	    tail = tail.getPrev();
-	    tail.setNext(null);
+	    if (tail != null) {
+		tail.setNext(null);
+	    }
 	    size--;
 	    return ret;
 	}
@@ -167,7 +176,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 	}
 	T ret = current.getNext().getValue();
 	current.setNext( current.getNext().getNext() );
-	current.getNext().setPrev(-current);
+	current.getNext().setPrev(current);
 	size--;
 	return ret;
     }
