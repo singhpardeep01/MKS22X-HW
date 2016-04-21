@@ -2,7 +2,6 @@ public class BSTree<T extends Comparable<T>> {
     private class Node{
 	T data;
 	Node left, right;
-	int height;
 	public void setData(T value){
 	    data = value;
 	}
@@ -22,12 +21,37 @@ public class BSTree<T extends Comparable<T>> {
 	    return right;
 	}
 	public int getHeight(){
-	    return height;
+	    return 0;
 	}
 	public void add(T value){
+	    if (left == null) {
+		left = value;
+	    }
+	    else if (right == null) {
+		right = value;
+	    }
+	    else {
+		int x = (int) (Math.random() * 2);
+		if (x == 0) {
+		    left.add(value);
+		}
+		else if (x == 1) {
+		    right.add(value);
+		}
+	    }
 	}
 	public String toString(){
 	}
 	public boolean contains(T value){
+	    if ( left.getData() == value || right.getData() == value) {
+		return true;
+	    }
+	    if (! left == null) {
+		return left.contains(value);
+	    }
+	    if (! right == null) {
+		return right.contains(value);
+	    }
+	    return false;
 	}
     }
