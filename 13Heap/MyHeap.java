@@ -13,18 +13,31 @@ public class MyHeap<T extends Comparable<T>>
        size = array.length-1;
        data = (T) new Comparable[size+1];
        for (T x : array) {
-	   add(array[x]);
+	   add(x);
        }
        heapify();
    }
    private void pushDown(int k) {
+       if (k == size || k*2 > data.length-2) {
+       }
+       else if( data[k].compareTo(data[k*2]) < 0) {
+	       T temp = data[k];
+	       data[k] = data[k*2];
+	       data[k*2] = temp;
+       }
+       else 
    }
    private void pushUp(int k) {
    }
    private void heapify() {
    }
    public T delete() {
-       return data[0];   
+       T = data[1];
+       for (int x = 1; x < size+1; x--) {
+	   data[x] = data[x+1];
+       }
+       data[size] = null;
+       return T;
    }
    public void add(T x) {
        if (size == data.length-1) {
@@ -44,8 +57,13 @@ public class MyHeap<T extends Comparable<T>>
 	   temp[x] = data[x];
        }
        data = temp;   
-}
+   }
    public String toString() {
+       String retStr = "";
+       for (int x = 1; x < size+1; x++) {
+	   retStr += data[x] + ", ";
+       }
+       return retStr.substring(0,retStr.length()-1);
    }
 
    //do this last
