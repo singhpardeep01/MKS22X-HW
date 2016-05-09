@@ -18,14 +18,14 @@ public class MyHeap<T extends Comparable<T>>
        heapify();
    }
    private void pushDown(int k) {
-       if (k == size || k*2 > data.length-2) {
-       }
-       else if( data[k].compareTo(data[k*2]) < 0) {
+       while (k*2 <= size && k*2+1 <= size) {
+if
+	   if (data[k*2].compareTo(data[k*2+1]) > 0) {
 	       T temp = data[k];
 	       data[k] = data[k*2];
 	       data[k*2] = temp;
-       }
-       else 
+	   }
+	   else if (data[k*2].compareTo
    }
    private void pushUp(int k) {
    }
