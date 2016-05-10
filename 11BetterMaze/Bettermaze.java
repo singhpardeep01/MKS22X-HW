@@ -3,7 +3,7 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node{
-	private int = row,col;
+	private int row,col;
 	private Node prev;
 
 	public Node(int r, int c, Node p) {
@@ -60,15 +60,47 @@ public class BetterMaze{
    /**Search for the end of the maze using the frontier. 
       Keep going until you find a solution or run out of elements on the frontier.
     **/
-    private boolean solve(){  
-        placesToGo.add( new Node(startRow, startCol, null) );
+    private boolean solve(){
+	Node current =  new Node(startRow, startCol, null);
+        placesToGo.add( current );
 	while ( placesToGo.hasNext() ) {
+	    current = placesToGo.next();
+	    if ( maze[current.getRow()][current.getCol()] == 'E' ) {
+		return true;
+	    }
+	    neighbors(current);
+	    if ( animate ) {
+		wait(100);
+		toString();
+	    }
 	}
 	return false;
     }    
-     
+
+    public boolean neighbors(Node current) {
+	try {
+	    if ( maze[current.getRow()+1][current.getCol()] == ' ' ) {
+		placesToGo.add( new Node(current.getRow()+1, current.getCol(), current) );
+	    }
+	    if ( maze[current.getRow()-1][current.getCol()] == ' ' ) {
+		placesToGo.add( new Node(current.getRow()-1, current.getCol(), current) );
+	    }
+	    if ( maze[current.getRow()][current.getCol()+1] == ' ' ) {
+		placesToGo.add( new Node(current.getRow(), current.getCol()+1, current) );
+	    }
+	    if ( maze[current.getRow()][current.getCol()-1] == ' ' ) {
+		placesToGo.add( new Node(current.getRow(), current.getCol()-1, current) );
+	    }
+	    return true;
+	} catch ( IndexOutOfBoundsException e ) {
+	    return false;
+	}
+    }
+	
    /**mutator for the animate variable  **/
-    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
+    public void setAnimate(boolean b){
+	animate = b;
+    }    
 
 
     public BetterMaze(String filename){
@@ -117,9 +149,9 @@ public class BetterMaze{
 
 
 
-    private static final String CLEAR_SCREEN =  "\033[2J";
-    private static final String HIDE_CURSOR =  "\033[?25l";
-    private static final String SHOW_CURSOR =  "\033[?25h";
+    private static final String CLEAR_SCREEN = "";// "\033[2J";
+    private static final String HIDE_CURSOR = "";// "\033[?25l";
+    private static final String SHOW_CURSOR = "";// "\033[?25h";
     private String go(int x,int y){
 	return ("\033[" + x + ";" + y + "H");
     }

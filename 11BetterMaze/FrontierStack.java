@@ -7,7 +7,7 @@ public class FrontierStack<T> implements Frontier<T>{
     }
 
     public T next() {
-	s.pop();
+	return (T) s.pop();
     }
     
     public boolean hasNext() {

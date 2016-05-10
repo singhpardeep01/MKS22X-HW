@@ -1,17 +1,17 @@
 import java.util.*;
 
-public class FrontierQueue<T> implements Frontier<T>{
-    private Queue s = new Queue();
+public class FrontierQueue<T> implements Frontier<T> {
+    MyQueue<T> s = new MyQueue<T>();
     public void add(T element) {
-	s.add(element);
+	s.enqueue(element);
     }
 
     public T next() {
-	s.remove();
+	return s.dequeue();
     }
     
     public boolean hasNext() {
-	if (s.peek == null) {
+	if (s.peek() == null) {
 	    return false;
 	}
 	return true; 
